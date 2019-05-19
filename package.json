@@ -7,7 +7,7 @@
     "start": "nodebench.sh"
   },
   "dependencies": {
-    "fastify": "^0",
+    "fastify": ">=0.38.0",
     "turbo-http": "^0.3.2"
   },
   "repository": {
