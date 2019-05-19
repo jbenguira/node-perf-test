@@ -69,12 +69,12 @@ echo "...................................................";
 wrk -t1 -c256 -d5s http://localhost:9057/;
 
 ## stop test server
-pm2 delete perf-turbohttp > /dev/null
+pm2 delete perf-turbohttp &> /dev/null
 
 
 ## Scale the server to run on each core
 pm2 delete perf-fastify &> /dev/null
-pm2 start perf-fastify.js -i $nbcores
+pm2 start perf-fastify.js -i $nbcores &> /dev/null
 sleep 2s
 
 echo "...................................................";
