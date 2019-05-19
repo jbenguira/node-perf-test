@@ -33,7 +33,7 @@ if which wrk > /dev/null
 then
     echo -e "\033[32mwrk is installed\033[m";
 else
-    echo -e "\033[1mInstalling Node.js 12.x ...\033[m";
+    echo -e "\033[1mInstalling wrk ...\033[m";
     sudo apt-get install build-essential libssl-dev git -y
     git clone https://github.com/wg/wrk.git wrk
     cd wrk
@@ -44,38 +44,44 @@ else
 fi
 
 ## clone git project
-git clone https://github.com/jbenguira/node-perf-test.git node-perf-test
+echo -e "\033[1mCloning git project ...\033[m";
+git clone https://github.com/jbenguira/node-perf-test.git node-perf-test &> /dev/null;
 cd node-perf-test
-npm install
+echo -e "\033[1mnpm install ...\033[m";
+npm install &> /dev/null;
+
+nbcores=$(grep -c ^processor /proc/cpuinfo);
 
 ## start test server
 pm2 start perf-fastify.js > /dev/null
 sleep 2s
-
-echo "Starting Node.js benchmark (single thread) with wrk";
+echo "Starting Node.js + fastify (single thread) benchmark with wrk";
 echo "...................................................";
-wrk -t1 -c256 -d5s http://localhost:9057/;
 
-## Scale the server to run on each vcore
-pm2 scale perf-fastify $nbcores > /dev/null
-sleep 2s
-
-echo "...................................................";
-echo "Starting Node.js benchmark (multi-thread) with wrk";
-echo "...................................................";
-nbcores=$(grep -c ^processor /proc/cpuinfo);
 wrk -t$nbcores -c256 -d5s http://localhost:9057/;
-
-## stop test server
-pm2 delete perf-fastify > /dev/null
 
 ## test with turo-http (single thread)
 pm2 start perf-turbohttp.js > /dev/null
 sleep 2s
 echo "...................................................";
-echo "Starting Node.js + turbo-http benchmark (single thread) with wrk";
+echo "Starting Node.js + turbo-http (single thread) benchmark with wrk";
 echo "...................................................";
 wrk -t1 -c256 -d5s http://localhost:9057/;
 
 ## stop test server
 pm2 delete perf-turbohttp > /dev/null
+
+
+## Scale the server to run on each core
+pm2 delete perf-fastify &> /dev/null
+pm2 start perf-fastify.js -i $nbcores
+sleep 2s
+
+echo "...................................................";
+echo "Starting Node.js + fastify ($nbcores threads) benchmark with wrk";
+echo "...................................................";
+wrk -t$nbcores -c256 -d5s http://localhost:9057/;
+
+## stop test server
+pm2 delete perf-fastify > /dev/null
+
