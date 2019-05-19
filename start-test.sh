@@ -2,7 +2,7 @@
 clear;
 
 echo -e "\033[35m********************************\033[m"
-echo -e "\033[35m[APPDRAG CLOUD IDE INSTALLATION]\033[m"
+echo -e "\033[35m[Node.js performance benchmark]\033[m"
 echo -e "\033[35m********************************\033[m"
 echo ""
 
