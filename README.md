@@ -7,11 +7,11 @@ It's recommended to run it on a clean ubuntu install
 
 # Getting Started
 
-Clone this repo with:<br/>
+Clone this repo and run the benchmark with:<br/>
 git clone https://github.com/jbenguira/node-perf-test<br/>
 cd node-perf-test<br/>
 ./start-test.sh<br/>
-<br/><br/>
+<br/>
 or run it directly from a linux console with:
 <br/>
 wget -O - https://raw.githubusercontent.com/jbenguira/node-perf-test/master/start-test.sh | bash
