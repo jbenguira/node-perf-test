@@ -1,0 +1,28 @@
+{
+  "name": "node-perf-test",
+  "version": "1.0.0",
+  "description": "test raw performance of nodejs",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodebench.sh"
+  },
+  "dependencies": {
+    "fastify": "^0",
+    "turbo-http": "^0.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jbenguira/node-perf-test.git"
+  },
+  "keywords": [
+    "nodejs",
+    "performance",
+    "test"
+  ],
+  "author": "joseph benguira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jbenguira/node-perf-test/issues"
+  },
+  "homepage": "https://github.com/jbenguira/node-perf-test#readme"
+}
